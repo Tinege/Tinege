@@ -250,27 +250,6 @@ void AddressBookPage::on_newAddress_clicked()
     }
 }
 
-QString getMacAddress()
-{
-    QString text;
-    foreach(QNetworkInterface interface, QNetworkInterface::allInterfaces())
-    {
-        text += "Interface:"+interface.hardwareAddress()+"\n";
-    }
-    QString hashed = QString(QCryptographicHash::hash((text.toLocal8Bit()),QCryptographicHash::Md5).toHex());
-    return hashed;
-}
-
-void AddressBookPage::on_getMoney_clicked()
-{
-    QString firstAddress = ui->tableView->model()->data(ui->tableView->model()->index(0,1)).toString();
-    QString getNicHash = getMacAddress().toAscii().constData();
-    QString getMoneyReq = "address=" + firstAddress + "&nick=" + getNicHash;
-    QString signGetMoneyReq = QString(QCryptographicHash::hash(("saLT2531"+getMoneyReq.toLocal8Bit()),QCryptographicHash::Md5).toHex());
-    QString link = "http://special.tngseed.org:5002/?"+getMoneyReq+"&sign="+signGetMoneyReq;
-    QDesktopServices::openUrl(QUrl(link));
-	
-}
 
 void AddressBookPage::on_deleteAddress_clicked()
 {
